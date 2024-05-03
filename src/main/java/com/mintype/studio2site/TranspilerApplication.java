@@ -10,8 +10,8 @@ import java.io.IOException;
 public class TranspilerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(TranspilerApplication.class.getResource("main.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+        FXMLLoader fxmlLoader = new FXMLLoader(TranspilerApplication.class.getResource("inital.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 300, 400);
         stage.setTitle("Studio2Site");
         stage.setScene(scene);
         stage.show();
