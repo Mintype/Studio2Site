@@ -5,10 +5,7 @@ import javafx.scene.control.Label;
 
 public class TranspilerApplicationController {
     @FXML
-    private Label welcomeText;
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public void initialize() {
+        System.out.println("starting main part of app!");
     }
 }
