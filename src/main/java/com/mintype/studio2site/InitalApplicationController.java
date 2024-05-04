@@ -30,9 +30,9 @@ public class InitalApplicationController {
         // Load and show the second window
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-            Parent root = loader.load();
             TranspilerApplicationController transpilerApplicationController = new TranspilerApplicationController(selectedDirectory);
             loader.setController(transpilerApplicationController);
+            Parent root = loader.load();
             Stage secondStage = new Stage();
             secondStage.setScene(new Scene(root));
             secondStage.setTitle("Second Window");
