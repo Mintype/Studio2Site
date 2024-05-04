@@ -31,6 +31,8 @@ public class InitalApplicationController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
             Parent root = loader.load();
+            TranspilerApplicationController transpilerApplicationController = new TranspilerApplicationController(selectedDirectory);
+            loader.setController(transpilerApplicationController);
             Stage secondStage = new Stage();
             secondStage.setScene(new Scene(root));
             secondStage.setTitle("Second Window");
@@ -39,5 +41,4 @@ public class InitalApplicationController {
             e.printStackTrace();
         }
     }
-
 }
