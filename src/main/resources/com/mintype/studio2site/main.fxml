@@ -7,6 +7,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text fx:id="appTitle" layoutX="29.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your App Title" />
-      <Button fx:id="testbutton" layoutX="59.0" layoutY="92.0" mnemonicParsing="false" onAction="#testt" text="Button" />
+      <Button fx:id="testbutton" layoutX="59.0" layoutY="92.0" mnemonicParsing="false" onAction="#createWebApp" text="Button" />
    </children>
 </AnchorPane>
