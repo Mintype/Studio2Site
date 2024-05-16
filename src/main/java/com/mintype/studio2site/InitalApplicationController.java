@@ -37,6 +37,9 @@ public class InitalApplicationController {
             secondStage.setScene(new Scene(root));
             secondStage.setTitle("Second Window");
             secondStage.show();
+
+            // close inital window.
+            stage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
