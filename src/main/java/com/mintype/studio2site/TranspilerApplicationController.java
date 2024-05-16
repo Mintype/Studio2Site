@@ -23,6 +23,16 @@ public class TranspilerApplicationController {
 
         // Set title to application folder title
         appTitle.setText(getDirFolder().getName());
+
+        // Check if html directory already exists and if true then delete it.
+        File folder = new File("html");
+        if (folder.exists()) {
+            // Delete the folder
+            deleteFolder(folder);
+            System.out.println("Folder deleted successfully.");
+        } else {
+            System.out.println("Folder does not exist.");
+        }
     }
 
     public File getDirFolder() {
@@ -37,6 +47,7 @@ public class TranspilerApplicationController {
 
     @FXML
     private void createWebApp() {
+
         // Create the html directory and index.html file
         File directory = new File("html");
         boolean directoryCreated = directory.mkdirs(); // mkdirs() creates parent directories if they don't exist
@@ -59,6 +70,19 @@ public class TranspilerApplicationController {
             e.printStackTrace();
         }
 
+        // Create the main.js file
+        File jsFile = new File("html/main.js");
+        try {
+            boolean fileCreated = jsFile.createNewFile();
+            if (fileCreated) {
+                System.out.println("main.js file created successfully.");
+            } else {
+                System.out.println("Failed to create main.js file or it already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // todo: add some util thing to help below.
         // Write text to index.html file
         try {
@@ -75,10 +99,23 @@ public class TranspilerApplicationController {
             // put stuff here now.
             boolean isTextView = false;
             boolean isButton = false;
+            boolean isVertical = false;
+            int counter = 0;
+            String layout = "";
             try (BufferedReader br = new BufferedReader(new FileReader(dirFolder + "/app/src/main/res/layout/activity_main.xml"))) {
                 String line;
                 while ((line = br.readLine()) != null) {
-                    //System.out.println(line); // prints out each line
+                    System.out.println(line); // prints out each line
+
+                    if(counter == 1) {
+                        layout = line.trim().substring(1, line.trim().indexOf(" "));
+                        System.out.println("LAYOUT:" + layout);
+                    } else if (counter == 6) {
+                        if (line.trim().contains("vertical")) {
+                            isVertical = true;
+                        }
+                    }
+                    counter++;
 
                     // code for textview
                     if(line.trim().equals("<TextView")) {
@@ -134,6 +171,34 @@ public class TranspilerApplicationController {
 
 
             myWriter.write("\n");
+            myWriter.write("<style>\n");
+            myWriter.write("body {\n" +
+                    "    padding: 0;\n" +
+                    "    margin: 0;\n");
+
+            // use flex if its linaer layout
+            if(layout.equalsIgnoreCase("LinearLayout"))
+                myWriter.write("    display: flex;\n");
+
+
+            if(isVertical)
+                myWriter.write("    flex-direction: column;\n");
+            else
+                myWriter.write("    flex-direction: row;\n");
+
+
+            myWriter.write("    background-color: rgb(240, 240, 240);\n" +
+                    "    font-family: Arial, Helvetica, sans-serif;\n" +
+                    "}\n" +
+                    "button {\n" +
+                    "    background-color: #6750A4;\n" +
+                    "    color: white;\n" +
+                    "    border: none;\n" +
+                    "    border-radius: 50px;\n" +
+                    "    padding: 15px;\n" +
+                    "    width: fit-content;\n" +
+                    "}\n");
+            myWriter.write("</style>\n");
             myWriter.write("</body>\n");
             myWriter.write("</html>");
             myWriter.close();
@@ -145,5 +210,19 @@ public class TranspilerApplicationController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void deleteFolder(File folder) {
+        File[] contents = folder.listFiles();
+        if (contents != null) {
+            for (File file : contents) {
+                if (file.isDirectory()) {
+                    deleteFolder(file);
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        folder.delete();
     }
 }
